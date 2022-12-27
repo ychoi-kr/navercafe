@@ -17,6 +17,7 @@ class NaverCafe:
         self.name = name
         self.clubid = clubid
         self.driver = Chrome(service=Service(ChromeDriverManager().install()))
+        self.driver.get(f"https://cafe.naver.com/{name}")
         
         
     def enter_id_pw(self, userid, userpw):
@@ -79,4 +80,20 @@ class NaverCafe:
                     td_view[i + offset].text,
                     td_likes[i + offset].text
                 ]
+        return df
+        
+    
+    def comments(self, articleid):
+        article_url = f'https://cafe.naver.com/{self.name}/{str(articleid)}'
+        self.driver.get(article_url)
+        time.sleep(3)
+        self.driver.switch_to.frame("cafe_main")
+        bs = BeautifulSoup(self.driver.page_source,'html.parser')
+        comment_nickname = self.driver.find_elements(By.CLASS_NAME, 'comment_nickname')
+        text_comment = self.driver.find_elements(By.CLASS_NAME, 'text_comment')
+        comment_info_date = self.driver.find_elements(By.CLASS_NAME, 'comment_info_date')
+        df = pd.DataFrame(columns=['닉네임', '댓글', '작성일시'])
+        for i in range(len(comment_nickname)):
+            df.loc[i] = [comment_nickname[i].text, text_comment[i].text, comment_info_date[i].text]
+        
         return df

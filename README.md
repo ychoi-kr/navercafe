@@ -9,10 +9,25 @@ $ pip install navercafe
 ```
 from navercafe import NaverCafe
 
-cafe = NaverCafe('wikibookstudy', '30853297')
-cafe.enter_id_pw('your_id', 'your_pw')  # Need manual authentication
+# 1. setup
+cafe_name = 'wikibookstudy'
+club_id = '30853297'
+cafe = NaverCafe(cafe_name, club_id)
 
-df = cafe.articleboard(34)
-print(len(df))
-print(df.head())
+# 2. (optional) enter user id and pw
+# This is semi-automatic (needs manual authentication)
+cafe.enter_id_pw('your_id', 'your_pw')
+
+# 3. get article board
+board_id = 34
+df1 = cafe.articleboard(board_id)
+print(len(df1))
+print(df1.head())
+
+# 4. get comments
+article_id = 139
+df2 = cafe.comments(article_id)
+print(len(df2))
+print(df2.head())
 ```
+

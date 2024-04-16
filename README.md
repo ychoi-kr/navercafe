@@ -19,7 +19,7 @@ cafe = NaverCafe(cafe_name, club_id)
 cafe.enter_id_pw('your_id', 'your_pw')
 
 # 3. get article board
-board_id = 34
+board_id = 28
 df1 = cafe.articleboard(board_id)
 print(len(df1))
 print(df1.head())
